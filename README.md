@@ -82,7 +82,13 @@ npm run dev
 Before starting work:
 
 ```bash
-git pull
+git pull origin main
+```
+
+Create a new branch for your work:
+
+```bash
+git checkout -b feature-name
 ```
 
 After making changes:
@@ -90,13 +96,16 @@ After making changes:
 ```bash
 git add .
 git commit -m "describe your changes"
-git push
+git push origin feature-name
 ```
 
+Create a Pull Request on GitHub to merge into main.
 ---
 
 ## Notes
 
-* Do **not push `.env` or `node_modules`**.
-* Always pull the latest code before starting work.
+* Do not push .env or node_modules
+* Always run git pull before starting work
+* Work on your own branch
+* Keep the folder structure unchanged
 * If you face errors, reinstall packages using `npm install`.
