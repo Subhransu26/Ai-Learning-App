@@ -1,0 +1,22 @@
+import experss from 'express';
+import {
+  getFlashcards,
+  getAllFlashcardSets,
+  reviewFlashcard,
+  toggleStarFlashcard,
+  deleteFlashcardSet,
+} from '../controller/flashcardController.js';
+import protect from '../middleware/auth.js';
+
+const router = experss.Router();
+
+// All routes are protected
+router.use(protect);
+
+router.get('/', getAllFlashcardSets);
+router.get('/:documentId', getFlashcards);
+router.post('/:cardId/review', reviewFlashcard);
+router.put('/:cardId/star', toggleStarFlashcard);
+router.delete('/:id', deleteFlashcardSet);
+
+export default router;
