@@ -11,6 +11,55 @@ import { findRelevantChunks } from "../utils/textChunker.js";
 // @access: Private
 export const generateFlashcards = async (req, res, next) => {
   try {
+    const { documentId, count = 10 } = req.body;
+
+    if (!documentId) {
+      return res.status(400).json({
+        success: false,
+        error: "Document ID is required",
+        statusCode: 400,
+      });
+    }
+
+    const document = await Document.findOne({
+      _id: documentId,
+      userId: req.user._id,
+      status: "ready",
+    });
+
+    if (!document) {
+      return res.status(404).json({
+        success: false,
+        error: "Document not found or not ready",
+        statusCode: 404,
+      });
+    }
+
+    // Generate flashcards using Gemini
+    const cards = await geminiService.generateFlashcards(
+      document.extractedText,
+      parseInt(count),
+    );
+
+    // save flashcards to database
+    const flashcardSet = await Flashcard.create({
+      userId: req.user._id,
+      documentId: document._id,
+      cards: cards.map((card) => ({
+        question: card.question,
+        answer: card.answer,
+        difficulty: card.difficulty,
+        reviewCount: 0,
+        isStarred: false,  //means marked as important / favorite
+      })),
+    });
+
+    return res.status(201).json({
+      success: true,
+      data: flashcardSet,
+      message: "Flashcards generated successfully",
+      statusCode: 201,
+    });
   } catch (error) {
     next(error);
   }
@@ -64,4 +113,4 @@ export const getChatHistory = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-} ;
+};

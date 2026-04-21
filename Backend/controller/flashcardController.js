@@ -1,6 +1,6 @@
 import Flashcard from "../models/Flashcard.js";
 
-// @desc: Get all flashcards
+// @desc: Get flashcards by id
 // @route: GET /api/flashcards/:documentId
 // @access: Private
 export const getFlashcards = async (req, res, next) => {
@@ -11,6 +11,21 @@ export const getFlashcards = async (req, res, next) => {
     })
       .populate("documentId", "title fileName")
       .sort({ createdAt: -1 });
+
+    if (!flashcards || flashcards.length === 0) {
+      return res.status(404).json({
+        success: false,
+        error: "No flashcards found for this document",
+        statusCode: 404,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: flashcards,
+      message: "Flashcards retrieved successfully",
+      statusCode: 200,
+    });
   } catch (error) {
     next(error);
   }
