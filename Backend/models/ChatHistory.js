@@ -27,7 +27,7 @@ const chatHistorySchema = new mongoose.Schema(
           type: Date,
           default: Date.now,
         },
-        revelantChunks: {
+        relevantChunks: {
           type: [Number], // array of chunk indices that are relevant to this message
           default: [],
         },
