@@ -6,10 +6,11 @@ import Spinner from "../../components/common/Spinner";
 import { ArrowLeft, ExternalLink, FileText } from "lucide-react";
 import PageHeader from "../../components/common/pageHeader";
 import Tabs from "../../components/common/Tabs";
+import ChatInterface from "../../components/chat/ChatInterface";
 
 function DocumentDetailPage() {
   const { id } = useParams();
-
+  
   const [document, setDocument] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("Content");
@@ -108,15 +109,7 @@ function DocumentDetailPage() {
   };
 
   const renderChat = () => {
-    return (
-      <div className="rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-sm">
-        <h3 className="text-lg font-semibold text-slate-900">AI Chat</h3>
-
-        <p className="mt-2 text-sm text-slate-500">
-          Chat functionality coming soon.
-        </p>
-      </div>
-    );
+    return <ChatInterface />;
   };
 
   const renderAIActions = () => {
