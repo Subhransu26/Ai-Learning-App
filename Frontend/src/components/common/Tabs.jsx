@@ -16,9 +16,7 @@ function Tabs({ tabs, activeTab, setActiveTab }) {
                   : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
               }`}
             >
-              <span className="relative z-10">
-                {tab.label}
-              </span>
+              <span className="relative z-10">{tab.label}</span>
 
               {/* Active Glow */}
               {activeTab === tab.name && (
@@ -39,10 +37,7 @@ function Tabs({ tabs, activeTab, setActiveTab }) {
         {tabs.map((tab) => {
           if (tab.name === activeTab) {
             return (
-              <div
-                key={tab.name}
-                className="transition-opacity duration-300"
-              >
+              <div key={tab.name} className="transition-opacity duration-300">
                 {tab.content}
               </div>
             );
