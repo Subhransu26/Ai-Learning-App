@@ -7,6 +7,8 @@ import { ArrowLeft, ExternalLink, FileText } from "lucide-react";
 import PageHeader from "../../components/common/pageHeader";
 import Tabs from "../../components/common/Tabs";
 import ChatInterface from "../../components/chat/ChatInterface";
+import AIActions from "../../components/ai/AIActions";
+import FlashcardManager from "../../components/flashcards/FlashcardManager";
 
 function DocumentDetailPage() {
   const { id } = useParams();
@@ -114,26 +116,12 @@ function DocumentDetailPage() {
 
   const renderAIActions = () => {
     return (
-      <div className="rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-sm">
-        <h3 className="text-lg font-semibold text-slate-900">AI Actions</h3>
-
-        <p className="mt-2 text-sm text-slate-500">
-          AI-powered actions will appear here.
-        </p>
-      </div>
+      <AIActions />
     );
   };
 
   const renderFlashCardsTab = () => {
-    return (
-      <div className="rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-sm">
-        <h3 className="text-lg font-semibold text-slate-900">Flashcards</h3>
-
-        <p className="mt-2 text-sm text-slate-500">
-          Flashcards will be generated here.
-        </p>
-      </div>
-    );
+    return <FlashcardManager documentId={id} />
   };
 
   const renderQuizzesTab = () => {
