@@ -101,7 +101,7 @@ const ChatInterface = () => {
           }`}
         >
           {isUser ? (
-            <p className="text-sm leading-relaxed">(msg.content)</p>
+            <p className="text-sm leading-relaxed">{msg.content}</p>
           ) : (
             <div className="prose prose-sm max-w-none prose-slate">
               <MarkdownRenderer content={msg.content} />
