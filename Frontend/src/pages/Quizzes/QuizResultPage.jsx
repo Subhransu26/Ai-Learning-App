@@ -70,8 +70,24 @@ const QuizResultsPage = () => {
     if (score >= 60) return "Not bad!";
     return "Keep practicing!";
   };
-  
-  return <div>QuizResultPage</div>;
+
+  return (
+    <div className="">
+      {/* Back Button */}
+      <div className="">
+        <Link
+          to={`/documents/${quiz.document._id}`}
+          className=""
+        >
+          <ArrowLeft className="" strokeWidth={2}/>
+          Back to Document
+        </Link>
+      </div>
+
+      <PageHeader title={`${quiz.title || 'Quiz'} Results`}/>
+
+    </div>
+  );
 };
 
 export default QuizResultPage;

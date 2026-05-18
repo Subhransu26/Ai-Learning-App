@@ -8,10 +8,8 @@ import {
   Sparkles,
   Brain,
 } from "lucide-react";
-
 import toast from "react-hot-toast";
 import moment from "moment";
-
 import flashcardService from "../../services/flashcardService";
 import aiService from "../../services/aiService";
 import Spinner from "../common/Spinner";
@@ -22,12 +20,9 @@ const FlashcardManager = ({ documentId }) => {
 
     const [flashcardSets, setFlashcardSets] = useState([]);
     const [selectedSet, setSelectedSet] = useState(null);
-
     const [loading, setLoading] = useState(true);
     const [generating, setGenerating] = useState(false);
-
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
-
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [deleting, setDeleting] = useState(false);
     const [setToDelete, setSetToDelete] = useState(null);
@@ -36,7 +31,6 @@ const FlashcardManager = ({ documentId }) => {
       setLoading(true);
       try {
         const response = await flashcardService.getFlashcardsForDocument(documentId);
-
         setFlashcardSets(response.data);
       } catch (error) {
         toast.error("Failed to fetch flashcard sets.");
@@ -68,7 +62,6 @@ const FlashcardManager = ({ documentId }) => {
     const handleNextCard = () => {
       if (selectedSet) {
         handleReview(currentCardIndex);
-
         setCurrentCardIndex(
           (prevIndex) => (prevIndex + 1) % selectedSet.cards.length,
         );
@@ -78,23 +71,19 @@ const FlashcardManager = ({ documentId }) => {
     const handlePrevCard = () => {
       if (selectedSet) {
         handleReview(currentCardIndex);
-
         setCurrentCardIndex(
           (prevIndex) =>
-            (prevIndex - 1 + selectedSet.cards.length) %
-            selectedSet.cards.length,
+            (prevIndex - 1 + selectedSet.cards.length) % selectedSet.cards.length,
         );
       }
     };
 
     const handleReview = async (index) => {
       const currentCard = selectedSet?.cards[currentCardIndex];
-
       if (!currentCard) return;
 
       try {
         await flashcardService.reviewFlashcard(currentCard._id, index);
-
         toast.success("Flashcard reviewed!");
       } catch (error) {
         toast.error("Failed to review flashcard.");
@@ -104,7 +93,6 @@ const FlashcardManager = ({ documentId }) => {
     const handleToggleStar = async (cardId) => {
       try {
         await flashcardService.toggleStar(cardId);
-
         const updatedSets = flashcardSets.map((set) => {
           if (set._id === selectedSet._id) {
             const updatedCards = set.cards.map((card) =>
@@ -130,24 +118,18 @@ const FlashcardManager = ({ documentId }) => {
 
     const handleDeleteRequest = (e, set) => {
       e.stopPropagation();
-
       setSetToDelete(set);
       setIsDeleteModalOpen(true);
     };
 
     const handleConfirmDelete = async () => {
       if (!setToDelete) return;
-
       setDeleting(true);
-
       try {
         await flashcardService.deleteFlashcardSet(setToDelete._id);
-
         toast.success("Flashcard set deleted successfully!");
-
         setIsDeleteModalOpen(false);
         setSetToDelete(null);
-
         fetchFlashcardSets();
       } catch (error) {
         toast.error(error.message || "Failed to delete flashcard set.");
@@ -251,7 +233,7 @@ const FlashcardManager = ({ documentId }) => {
             <button
               onClick={handleGenerateFlashcards}
               disabled={generating}
-              className="group inline-flex items-center gap-2 px-6 h-12 bg-linear-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-senibold text-sm rounded-xl transition-all duration-200 shadow-lg shdow-emerald-500/25 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
+              className="group inline-flex items-center gap-2 px-6 h-12 bg-linear-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold text-sm rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
             >
               {generating ? (
                 <>
