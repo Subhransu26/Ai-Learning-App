@@ -20,9 +20,7 @@ function ProfilePage() {
 
   const [dashboardData, setDashboardData] = useState(null);
 
-  const [currentPassword, setCurrentPassword] = useState("");
-
-  const [newPassword, setNewPassword] = useState("");
+  const [currentPassword, setgit Password] = useState("");
 
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
