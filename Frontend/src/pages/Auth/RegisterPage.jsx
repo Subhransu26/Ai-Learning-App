@@ -29,8 +29,9 @@ const RegisterPage = () => {
       toast.success("Registration in Successfully! Please Login");
       navigate("/login");
     } catch (err) {
-      setError(err.message || "Failed to register. Please try again.");
-      toast.error(err.message || "Failed to register");
+      setError(err.error || "Failed to register. Please try again.");
+
+      toast.error(err.error || "Failed to register");
     } finally {
       setLoading(false);
     }

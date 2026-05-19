@@ -256,4 +256,4 @@ const QuizResultsPage = () => {
   );
 };
 
-export default QuizResultPage;
+export default QuizResultsPage;

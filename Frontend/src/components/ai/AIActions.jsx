@@ -19,11 +19,24 @@ const AIActions = () => {
     setLoadingAction("summary");
 
     try {
-      const { summary } = await aiService.generateSummary(documentId);
+      // console.log("Generating summary...");
+
+      const response = await aiService.generateSummary(documentId);
+
+      // console.log("FULL RESPONSE:", response);
+
+      // console.log("SUMMARY:", response?.data?.summary);
+
+      const summary = response?.data?.summary;
+
       setModalTitle("Generated Summary");
+
       setModalContent(summary);
+
       setIsModalOpen(true);
     } catch (error) {
+      // console.log("SUMMARY ERROR:", error);
+
       toast.error("Failed to generate summary.");
     } finally {
       setLoadingAction(null);
@@ -41,16 +54,20 @@ const AIActions = () => {
     setLoadingAction("explain");
 
     try {
-      const { explanation } = await aiService.explainConcept(
-        documentId,
-        concept,
-      );
+      const response = await aiService.explainConcept(documentId, concept);
+
+      const explanation = response.data.explanation;
 
       setModalTitle(`Explanation of "${concept}"`);
+
       setModalContent(explanation);
+
       setIsModalOpen(true);
+
       setConcept("");
     } catch (error) {
+      console.log(error);
+
       toast.error("Failed to explain concept.");
     } finally {
       setLoadingAction(null);
@@ -79,7 +96,7 @@ const AIActions = () => {
         <div className="p-6 space-y-6">
           {/* Generate Summary */}
           <div className="group p-5 bg-linear-to-br from-slate-50/50 to-white rounded-xl border border-slate-200/60 hover:border-slate-300/60  hover:shadow-md transition-all duration-200">
-            <div className="" flex items-start justify-between gap-4>
+            <div className="flex items-start justify-between gap-4">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-8 h-8 rounded-lg bg-linear-to-br from-blue-100 to-cyan-100 flex items-center justify-center">
@@ -167,7 +184,7 @@ const AIActions = () => {
         title={modalTitle}
       >
         <div className="max-h-[60vh] overflow-y-auto prose prose-sm max-w-none prose-slate">
-          <MarkdownRenderer context={modalContent} />
+          <MarkdownRenderer content={modalContent} />
         </div>
       </Modal>
     </>

@@ -4,13 +4,19 @@ import PageHeader from "../../components/common/PageHeader";
 import Tabs from "../../components/profile/Tabs";
 import { useAuth } from "../../context/AuthContext";
 import progressService from "../../services/progressService";
+import authService from "../../services/authService";
+
 import toast from "react-hot-toast";
 function ProfilePage() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("Account");
   const [dashboardData, setDashboardData] = useState(null);
-  const [currentPassword, setgitPassword] = useState("");
+
+  const [currentPassword, setCurrentPassword] = useState("");
+
+  const [newPassword, setNewPassword] = useState("");
+
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
   useEffect(() => {
@@ -27,6 +33,38 @@ function ProfilePage() {
     };
     fetchDashboard();
   }, []);
+
+  const handleUpdatePassword = async () => {
+    try {
+      if (!currentPassword || !newPassword || !confirmNewPassword) {
+        toast.error("Please fill all fields");
+        return;
+      }
+
+      if (newPassword !== confirmNewPassword) {
+        toast.error("Passwords do not match");
+        return;
+      }
+
+      if (newPassword.length < 6) {
+        toast.error("Password must be at least 6 characters");
+        return;
+      }
+
+      await authService.changePassword({
+        currentPassword,
+        newPassword,
+      });
+
+      toast.success("Password updated successfully");
+
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmNewPassword("");
+    } catch (error) {
+      toast.error(error?.error || "Failed to update password");
+    }
+  };
 
   if (loading) {
     return (
@@ -131,6 +169,7 @@ function ProfilePage() {
           setNewPassword={setNewPassword}
           confirmNewPassword={confirmNewPassword}
           setConfirmNewPassword={setConfirmNewPassword}
+          handleUpdatePassword={handleUpdatePassword}
         />
       </div>
     </div>

@@ -13,10 +13,11 @@ export const getFlashcards = async (req, res, next) => {
       .sort({ createdAt: -1 });
 
     if (!flashcards || flashcards.length === 0) {
-      return res.status(404).json({
-        success: false,
-        error: "No flashcards found for this document",
-        statusCode: 404,
+      return res.status(200).json({
+        success: true,
+        data: [],
+        message: "No flashcards found for this document",
+        statusCode: 200,
       });
     }
 

@@ -17,6 +17,7 @@ function Tabs({
   setNewPassword,
   confirmNewPassword,
   setConfirmNewPassword,
+  handleUpdatePassword,
 }) {
   const tabs = [
     {
@@ -203,7 +204,7 @@ function Tabs({
             </div>
 
             <div className="pt-2">
-              <Button>
+              <Button onClick={handleUpdatePassword}>
                 <Lock className="h-4 w-4" />
                 Update Password
               </Button>
