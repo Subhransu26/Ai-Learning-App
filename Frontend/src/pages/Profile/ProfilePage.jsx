@@ -1,24 +1,16 @@
 import React, { useEffect, useState } from "react";
-
 import Spinner from "../../components/common/Spinner";
 import PageHeader from "../../components/common/PageHeader";
-
 import Tabs from "../../components/profile/Tabs";
-
 import { useAuth } from "../../context/AuthContext";
-
 import progressService from "../../services/progressService";
 import authService from "../../services/authService";
 
 import toast from "react-hot-toast";
-
 function ProfilePage() {
   const { user } = useAuth();
-
   const [loading, setLoading] = useState(true);
-
   const [activeTab, setActiveTab] = useState("Account");
-
   const [dashboardData, setDashboardData] = useState(null);
 
   const [currentPassword, setCurrentPassword] = useState("");
@@ -31,17 +23,14 @@ function ProfilePage() {
     const fetchDashboard = async () => {
       try {
         const response = await progressService.getDashboardData();
-
         setDashboardData(response.data);
       } catch (error) {
         toast.error("Failed to load profile data");
-
         console.log(error);
       } finally {
         setLoading(false);
       }
     };
-
     fetchDashboard();
   }, []);
 
@@ -86,7 +75,6 @@ function ProfilePage() {
   }
 
   const overview = dashboardData?.overview;
-
   const recentActivity = dashboardData?.recentActivity;
 
   return (
@@ -117,13 +105,10 @@ function ProfilePage() {
                 <h2 className="text-4xl font-bold tracking-tight">
                   {user?.username}
                 </h2>
-
                 <p className="mt-2 text-white/90">{user?.email}</p>
-
                 <p className="mt-3 text-sm text-white/80">
                   Joined {new Date(user?.createdAt).toLocaleDateString()}
                 </p>
-
                 <div className="mt-4 inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm backdrop-blur-sm">
                   Active Learner
                 </div>
