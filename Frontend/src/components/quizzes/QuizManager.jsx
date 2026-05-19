@@ -188,3 +188,5 @@ const QuizManager = ({ documentId }) => {
     </div>
   );
 };
+
+export default QuizManager;

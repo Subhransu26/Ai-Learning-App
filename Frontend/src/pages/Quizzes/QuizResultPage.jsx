@@ -74,4 +74,4 @@ const QuizResultsPage = () => {
   return <div>QuizResultPage</div>;
 };
 
-export default QuizResultPage;
+export default QuizResultsPage;
